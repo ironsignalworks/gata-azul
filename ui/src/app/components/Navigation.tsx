@@ -92,8 +92,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div id="mobile-nav-panel" className="mt-4 pt-4 md:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-3">
+        <div id="mobile-nav-panel" className="absolute left-0 right-0 top-full bg-black px-6 py-4 md:hidden">
+          <div className="flex w-full flex-col gap-3">
             {rightItems.map((item) => (
               <button
                 key={item.value}
