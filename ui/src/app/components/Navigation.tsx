@@ -17,7 +17,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 bg-black/95 px-6 py-6 backdrop-blur-sm md:px-8 md:py-4"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-8 md:py-4"
       aria-label="Primary navigation"
     >
       <div
@@ -29,14 +29,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             onNavigate('home');
             setIsMobileMenuOpen(false);
           }}
-          className={`text-xs uppercase tracking-[0.18em] transition-colors ${
-            currentPage === 'home' ? 'opacity-100' : 'opacity-90'
-          }`}
-          style={{ color: currentPage === 'home' ? 'var(--ui-text)' : 'var(--ui-text-muted)' }}
+          className="text-xs uppercase tracking-[0.18em] transition-colors"
+          style={{ color: 'var(--ui-text)' }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.color = currentPage === 'home' ? 'var(--ui-text)' : 'var(--ui-text-muted)')
-          }
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text)')}
           aria-current={currentPage === 'home' ? 'page' : undefined}
         >
           Home
@@ -57,15 +53,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               <button
                 key={item.value}
                 onClick={() => onNavigate(item.value)}
-                className={`text-xs uppercase tracking-[0.18em] transition-colors ${
-                  currentPage === item.value ? 'opacity-100' : 'opacity-90'
-                }`}
-                style={{ color: currentPage === item.value ? 'var(--ui-text)' : 'var(--ui-text-muted)' }}
+                className="text-xs uppercase tracking-[0.18em] transition-colors"
+                style={{ color: 'var(--ui-text)' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color =
-                    currentPage === item.value ? 'var(--ui-text)' : 'var(--ui-text-muted)')
-                }
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text)')}
                 aria-current={currentPage === item.value ? 'page' : undefined}
               >
                 {item.label}
@@ -101,7 +92,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div id="mobile-nav-panel" className="mt-4 border-t pt-4 md:hidden" style={{ borderColor: 'var(--ui-separator)' }}>
+        <div id="mobile-nav-panel" className="mt-4 pt-4 md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-3">
             {rightItems.map((item) => (
               <button
@@ -110,10 +101,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   onNavigate(item.value);
                   setIsMobileMenuOpen(false);
                 }}
-                className={`text-left text-xs uppercase tracking-[0.18em] transition-colors ${
-                  currentPage === item.value ? 'opacity-100' : 'opacity-90'
-                }`}
-                style={{ color: currentPage === item.value ? 'var(--ui-text)' : 'var(--ui-text-muted)' }}
+                className="text-left text-xs uppercase tracking-[0.18em] transition-colors"
+                style={{ color: 'var(--ui-text)' }}
               >
                 {item.label}
               </button>
