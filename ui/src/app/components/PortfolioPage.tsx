@@ -73,9 +73,26 @@ export function PortfolioPage() {
       {selectedIndex !== null && (
         <div
           className="fixed inset-0 z-[100] bg-black/90 p-4 md:p-8"
-          onClick={closeModal}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              closeModal();
+            }
+          }}
+          onPointerDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeModal();
+            }
+          }}
+          onTouchStart={(event) => {
+            if (event.target === event.currentTarget) {
+              closeModal();
+            }
+          }}
         >
-          <div className="mx-auto flex h-full w-full max-w-6xl flex-col" onClick={(event) => event.stopPropagation()}>
+          <div
+            className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-col"
+            onClick={(event) => event.stopPropagation()}
+          >
             <div className="mb-3 flex items-center justify-between">
               <button
                 onClick={goPrev}
@@ -86,9 +103,6 @@ export function PortfolioPage() {
               >
                 Prev
               </button>
-              <p className="text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--ui-text)' }}>
-                {selectedIndex + 1} / {images.length}
-              </p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={goNext}
@@ -139,6 +153,12 @@ export function PortfolioPage() {
               }}
             >
               <div className="mx-auto w-fit rounded-md border bg-black/60 p-2 md:p-4" style={{ borderColor: 'var(--ui-separator)' }}>
+                <p
+                  className="mb-2 text-center text-xs uppercase tracking-[0.2em]"
+                  style={{ color: 'var(--ui-text)' }}
+                >
+                  {selectedIndex + 1} / {images.length}
+                </p>
                 <img
                   src={images[selectedIndex]}
                   alt={`Tattoo work ${selectedIndex + 1}`}

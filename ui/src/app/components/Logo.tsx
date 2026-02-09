@@ -6,16 +6,16 @@ export function Logo() {
       <img
         src={logoSrc}
         alt="Gata Azul logo"
-        className="hero-populate-media h-auto w-full max-w-[380px] object-contain"
+        className="hero-populate-media h-auto w-full max-w-[450px] object-contain md:max-w-[380px]"
         onError={(event) => {
           event.currentTarget.style.display = 'none';
         }}
       />
       <h2
-        className="hero-populate-copy text-xl md:text-4xl"
+        className="hero-populate-copy text-2xl md:text-4xl"
         style={{ color: '#e8aeff', fontFamily: 'var(--font-display)' }}
       >
-        psychedelic traditional american tattoo
+        Psychedelic Traditional American Tattoo
       </h2>
     </div>
   );

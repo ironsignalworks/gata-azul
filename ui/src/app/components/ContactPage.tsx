@@ -8,6 +8,9 @@ export function ContactPage() {
         >
           Contact
         </h1>
+        <p className="-mt-4 mb-8 text-sm tracking-[0.14em]" style={{ color: 'var(--ui-text-muted)' }}>
+          Angie Izquierdo de la Flor
+        </p>
 
         <div className="grid gap-6 text-sm md:grid-cols-2" style={{ fontFamily: 'var(--font-ui)' }}>
           <div>
@@ -44,40 +47,9 @@ export function ContactPage() {
 
           <div>
             <p className="mb-2 uppercase tracking-[0.18em]" style={{ color: 'var(--ui-text-muted)' }}>
-              Phone
-            </p>
-            <a
-              href="tel:+15125550123"
-              className="transition-colors"
-              style={{ color: 'var(--ui-text)' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text)')}
-            >
-              +1 (512) 555-0123
-            </a>
-          </div>
-
-          <div>
-            <p className="mb-2 uppercase tracking-[0.18em]" style={{ color: 'var(--ui-text-muted)' }}>
               Hours
             </p>
-            <p style={{ color: 'var(--ui-text)' }}>Tue-Sat 12:00-20:00</p>
-          </div>
-
-          <div className="md:col-span-2">
-            <p className="mb-2 uppercase tracking-[0.18em]" style={{ color: 'var(--ui-text-muted)' }}>
-              Address
-            </p>
-            <p style={{ color: 'var(--ui-text)' }}>123 Ink Street, Austin, TX</p>
-          </div>
-
-          <div className="md:col-span-2">
-            <p className="mb-2 uppercase tracking-[0.18em]" style={{ color: 'var(--ui-text-muted)' }}>
-              Booking Notes
-            </p>
-            <p style={{ color: 'var(--ui-text)' }}>
-              Walk-ins welcome when available. For larger custom work, DM on Instagram or email references.
-            </p>
+            <p style={{ color: 'var(--ui-text)' }}>Mon-Sat 10:00-21:00</p>
           </div>
         </div>
       </div>
