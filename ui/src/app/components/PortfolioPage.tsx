@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-const images = ['/t1.jpeg', '/t2.jpeg', '/t3.jpeg', '/t4.jpeg', '/t5.jpeg', '/t6.jpeg', '/t7.jpeg'];
+const images = ['t1.jpeg', 't2.jpeg', 't3.jpeg', 't4.jpeg', 't5.jpeg', 't6.jpeg', 't7.jpeg'].map(
+  (filename) => `${import.meta.env.BASE_URL}${filename}`,
+);
 
 export function PortfolioPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
