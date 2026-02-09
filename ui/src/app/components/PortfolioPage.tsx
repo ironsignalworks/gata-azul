@@ -88,6 +88,9 @@ export function PortfolioPage() {
               closeModal();
             }
           }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Portfolio image viewer"
         >
           <div
             className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-col"

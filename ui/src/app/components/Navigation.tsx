@@ -16,7 +16,10 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 px-6 py-6 backdrop-blur-sm md:px-8 md:py-4">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 bg-black/95 px-6 py-6 backdrop-blur-sm md:px-8 md:py-4"
+      aria-label="Primary navigation"
+    >
       <div
         className="mx-auto flex max-w-7xl items-center justify-between"
         style={{ fontFamily: 'var(--font-ui)' }}
@@ -34,12 +37,15 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
           onMouseLeave={(e) =>
             (e.currentTarget.style.color = currentPage === 'home' ? 'var(--ui-text)' : 'var(--ui-text-muted)')
           }
+          aria-current={currentPage === 'home' ? 'page' : undefined}
         >
           Home
         </button>
         <button
           className="md:hidden"
           aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-nav-panel"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           style={{ color: 'var(--ui-text)' }}
         >
@@ -60,6 +66,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   (e.currentTarget.style.color =
                     currentPage === item.value ? 'var(--ui-text)' : 'var(--ui-text-muted)')
                 }
+                aria-current={currentPage === item.value ? 'page' : undefined}
               >
                 {item.label}
               </button>
@@ -94,7 +101,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div className="mt-4 border-t pt-4 md:hidden" style={{ borderColor: 'var(--ui-separator)' }}>
+        <div id="mobile-nav-panel" className="mt-4 border-t pt-4 md:hidden" style={{ borderColor: 'var(--ui-separator)' }}>
           <div className="mx-auto flex max-w-7xl flex-col gap-3">
             {rightItems.map((item) => (
               <button
