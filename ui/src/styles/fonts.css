@@ -1,0 +1,6 @@
+@import url('https://api.fontshare.com/v2/css?f[]=neue-montreal@400,500,700&display=swap');
+
+:root {
+  --font-display: 'Cooper Black', 'Cooper Std', 'Bookman Old Style', serif;
+  --font-ui: 'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
