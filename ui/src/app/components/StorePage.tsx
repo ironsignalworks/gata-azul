@@ -143,6 +143,9 @@ export function StorePage() {
               closeModal();
             }
           }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Store image viewer"
         >
           <div
             className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-col"
@@ -226,7 +229,13 @@ export function StorePage() {
       )}
 
       {buyProductIndex !== null && (
-        <div className="fixed inset-0 z-[120] bg-black/88 p-4 md:p-8" onClick={closeBuyForm}>
+        <div
+          className="fixed inset-0 z-[120] bg-black/88 p-4 md:p-8"
+          onClick={closeBuyForm}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Purchase request form"
+        >
           <div
             className="mx-auto w-full max-w-xl rounded-md border bg-black/90 p-4 md:p-6"
             style={{ borderColor: 'var(--ui-separator)' }}
@@ -246,34 +255,53 @@ export function StorePage() {
             </div>
 
             <form onSubmit={submitOrderEmail} className="space-y-3">
+              <label htmlFor="buyer-name" className="sr-only">
+                Name
+              </label>
               <input
+                id="buyer-name"
                 required
                 type="text"
                 placeholder="Name"
+                autoComplete="name"
                 value={formData.name}
                 onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
                 className="w-full rounded border px-3 py-2 text-sm outline-none"
                 style={{ borderColor: 'var(--ui-separator)', backgroundColor: 'rgba(0,0,0,0.6)', color: 'var(--ui-text)' }}
               />
+              <label htmlFor="buyer-email" className="sr-only">
+                Email
+              </label>
               <input
+                id="buyer-email"
                 required
                 type="email"
                 placeholder="Email"
+                autoComplete="email"
                 value={formData.email}
                 onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
                 className="w-full rounded border px-3 py-2 text-sm outline-none"
                 style={{ borderColor: 'var(--ui-separator)', backgroundColor: 'rgba(0,0,0,0.6)', color: 'var(--ui-text)' }}
               />
+              <label htmlFor="buyer-shipping" className="sr-only">
+                City and Country for shipping
+              </label>
               <input
+                id="buyer-shipping"
                 required
                 type="text"
                 placeholder="City / Country for shipping"
+                autoComplete="address-level2"
                 value={formData.shippingLocation}
                 onChange={(event) => setFormData((prev) => ({ ...prev, shippingLocation: event.target.value }))}
                 className="w-full rounded border px-3 py-2 text-sm outline-none"
                 style={{ borderColor: 'var(--ui-separator)', backgroundColor: 'rgba(0,0,0,0.6)', color: 'var(--ui-text)' }}
               />
+              <label htmlFor="buyer-note" className="sr-only">
+                Optional note
+              </label>
               <textarea
+                id="buyer-note"
                 placeholder="Optional note"
                 value={formData.note}
                 onChange={(event) => setFormData((prev) => ({ ...prev, note: event.target.value }))}
