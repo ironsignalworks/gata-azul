@@ -6,7 +6,7 @@ export function Logo() {
       <img
         src={logoSrc}
         alt="Gata Azul logo"
-        className="hero-populate-media h-auto w-full max-w-[450px] object-contain md:max-w-[380px]"
+        className="hero-populate-media h-auto w-full max-w-[490px] object-contain md:max-w-[380px]"
         onError={(event) => {
           event.currentTarget.style.display = 'none';
         }}
