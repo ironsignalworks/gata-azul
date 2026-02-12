@@ -2,17 +2,19 @@ import { Instagram, Mail, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface NavigationProps {
-  currentPage: 'home' | 'store' | 'portfolio' | 'contact';
-  onNavigate: (page: 'home' | 'store' | 'portfolio' | 'contact') => void;
+  currentPage: 'home' | 'store' | 'portfolio' | 'flash' | 'contact' | 'bio';
+  onNavigate: (page: 'home' | 'store' | 'portfolio' | 'flash' | 'contact' | 'bio') => void;
 }
 
 export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const rightItems: Array<{ label: string; value: 'store' | 'portfolio' | 'contact' }> = [
+  const rightItems: Array<{ label: string; value: 'store' | 'portfolio' | 'flash' | 'contact' | 'bio' }> = [
     { label: 'Portfolio', value: 'portfolio' },
+    { label: 'Flash', value: 'flash' },
     { label: 'Store', value: 'store' },
     { label: 'Contact', value: 'contact' },
+    { label: 'BIO', value: 'bio' },
   ];
 
   return (

@@ -6,9 +6,11 @@ import { PortfolioPage } from './components/PortfolioPage';
 import { PsychedelicShaderBackground } from './components/PsychedelicShaderBackground';
 import { ContactPage } from './components/ContactPage';
 import { StorePage } from './components/StorePage';
+import { BioPage } from './components/BioPage';
+import { FlashPage } from './components/FlashPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'store' | 'portfolio' | 'contact'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'store' | 'portfolio' | 'flash' | 'contact' | 'bio'>('home');
 
   const renderPage = () => {
     if (currentPage === 'home') {
@@ -21,6 +23,14 @@ export default function App() {
 
     if (currentPage === 'contact') {
       return <ContactPage />;
+    }
+
+    if (currentPage === 'flash') {
+      return <FlashPage />;
+    }
+
+    if (currentPage === 'bio') {
+      return <BioPage />;
     }
 
     return <StorePage />;
