@@ -48,11 +48,7 @@ export default function App() {
       <div className="absolute inset-0 z-10 bg-black/35" />
       <div className="relative z-20 flex h-dvh min-h-svh flex-col overflow-hidden">
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-        <main
-          id="main-content"
-          className="flex-1 overflow-hidden pt-24 md:pt-16"
-          style={{ paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom))' }}
-        >
+        <main id="main-content" className="flex-1 overflow-hidden pt-24 md:pt-16">
           {renderPage()}
         </main>
         <Footer />
