@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const flashImages = [
   'flash/IMG_6480.jpeg',
@@ -11,6 +11,16 @@ const flashImages = [
 
 export function FlashPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const modalTitleId = 'flash-modal-title';
+
+  const goPrev = () => {
+    setSelectedIndex((prev) => (prev === null ? 0 : (prev - 1 + flashImages.length) % flashImages.length));
+  };
+
+  const goNext = () => {
+    setSelectedIndex((prev) => (prev === null ? 0 : (prev + 1) % flashImages.length));
+  };
 
   useEffect(() => {
     if (selectedIndex === null) {
@@ -21,6 +31,14 @@ export function FlashPage() {
       if (event.key === 'Escape') {
         setSelectedIndex(null);
       }
+
+      if (event.key === 'ArrowRight') {
+        goNext();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        goPrev();
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -29,8 +47,27 @@ export function FlashPage() {
     };
   }, [selectedIndex]);
 
+  useEffect(() => {
+    const previousTitle = document.title;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const previousDescription = metaDescription?.getAttribute('content') ?? null;
+
+    document.title = 'Available Flash Tattoos in Sevilla | Gata Azul Tattoo';
+    metaDescription?.setAttribute(
+      'content',
+      'Browse available flash tattoos in Sevilla by Gata Azul Tattoo. American Traditional and psychedelic flash designs open for booking.',
+    );
+
+    return () => {
+      document.title = previousTitle;
+      if (metaDescription && previousDescription) {
+        metaDescription.setAttribute('content', previousDescription);
+      }
+    };
+  }, []);
+
   return (
-    <section className="flex h-full flex-col px-6 pb-6 pt-4 md:px-8">
+    <section className="flex h-full flex-col px-6 pb-6 pt-4 md:px-8" aria-label="Flash catalog">
       <div className="mx-auto mb-4 w-full max-w-7xl">
         <h1
           className="text-sm uppercase tracking-[0.2em]"
@@ -38,19 +75,33 @@ export function FlashPage() {
         >
           Available Flash
         </h1>
+        <p className="mt-2 max-w-3xl text-xs leading-relaxed tracking-[0.06em]" style={{ color: 'var(--ui-text-muted)' }}>
+          Select a flash design to preview full size. Swipe left or right on mobile, or use arrow keys on desktop.
+        </p>
       </div>
-      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-5">
+      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-3" role="list">
         {flashImages.map((src, index) => (
           <button
             key={src}
             onClick={() => setSelectedIndex(index)}
-            className="overflow-hidden rounded-md border"
+            className="overflow-hidden rounded-md border transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ borderColor: 'var(--ui-separator)' }}
+            aria-label={`Open flash design ${index + 1} of ${flashImages.length}`}
+            role="listitem"
           >
             <img src={src} alt={`Available flash ${index + 1}`} className="h-full w-full object-cover" loading="lazy" />
           </button>
         ))}
       </div>
+      <section className="seo-content mx-auto mt-5 w-full max-w-7xl" aria-label="Flash SEO text">
+        <h2 className="text-sm uppercase tracking-[0.16em]" style={{ color: 'var(--ui-text-muted)' }}>
+          Flash Tattoos in Sevilla
+        </h2>
+        <p className="mt-2 text-xs leading-relaxed tracking-[0.06em]" style={{ color: 'var(--ui-text-muted)' }}>
+          Available flash tattoos by Gata Azul Tattoo in Sevilla. American Traditional and psychedelic flash designs
+          available for booking, including custom adaptation and placement guidance.
+        </p>
+      </section>
 
       {selectedIndex !== null && (
         <div
@@ -60,23 +111,82 @@ export function FlashPage() {
               setSelectedIndex(null);
             }
           }}
+          onPointerDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedIndex(null);
+            }
+          }}
           role="dialog"
           aria-modal="true"
-          aria-label="Flash image preview"
+          aria-labelledby={modalTitleId}
         >
-          <div className="mx-auto flex h-full w-full max-w-[96vw] min-w-[280px] flex-col md:max-w-[48vw]">
-            <div className="mb-3 flex justify-end">
+          <div className="mx-auto flex h-full w-full max-w-[96vw] min-w-[280px] flex-col md:max-w-[48vw]" onClick={(event) => event.stopPropagation()}>
+            <div className="mb-3 flex items-center justify-between">
               <button
-                onClick={() => setSelectedIndex(null)}
+                onClick={goPrev}
                 className="text-xs uppercase tracking-[0.2em] transition-colors"
                 style={{ color: 'var(--ui-text-muted)' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text-muted)')}
+                aria-label="Show previous flash image"
               >
-                Close
+                Prev
               </button>
+              <p id={modalTitleId} className="text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--ui-text)' }}>
+                Flash {selectedIndex + 1} / {flashImages.length}
+              </p>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={goNext}
+                  className="text-xs uppercase tracking-[0.2em] transition-colors"
+                  style={{ color: 'var(--ui-text-muted)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text-muted)')}
+                  aria-label="Show next flash image"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setSelectedIndex(null)}
+                  className="text-xs uppercase tracking-[0.2em] transition-colors"
+                  style={{ color: 'var(--ui-text-muted)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text-muted)')}
+                  aria-label="Close flash preview"
+                >
+                  Close
+                </button>
+              </div>
             </div>
-            <div className="flex-1 overflow-auto rounded-md border bg-black/60 p-2" style={{ borderColor: 'var(--ui-separator)' }}>
+            <div
+              className="flex-1 overflow-auto rounded-md border bg-black/60 p-2"
+              style={{ borderColor: 'var(--ui-separator)' }}
+              onTouchStart={(event) => {
+                const touch = event.changedTouches[0];
+                touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+              }}
+              onTouchEnd={(event) => {
+                if (!touchStartRef.current) {
+                  return;
+                }
+
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - touchStartRef.current.x;
+                const deltaY = touch.clientY - touchStartRef.current.y;
+                touchStartRef.current = null;
+
+                const horizontalThreshold = 50;
+                if (Math.abs(deltaX) < horizontalThreshold || Math.abs(deltaX) <= Math.abs(deltaY)) {
+                  return;
+                }
+
+                if (deltaX < 0) {
+                  goNext();
+                } else {
+                  goPrev();
+                }
+              }}
+            >
               <img
                 src={flashImages[selectedIndex]}
                 alt={`Available flash ${selectedIndex + 1}`}
