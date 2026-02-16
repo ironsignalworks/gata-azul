@@ -17,9 +17,14 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { label: 'BIO', value: 'bio' },
   ];
 
+  const navButtonClass = (isActive: boolean, mobile = false) =>
+    `${mobile ? 'w-full text-left' : ''} relative text-xs uppercase tracking-[0.18em] transition-colors ${
+      isActive ? 'text-[var(--ui-hover)]' : 'text-[var(--ui-text)] hover:text-[var(--ui-hover)]'
+    }`;
+
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-8 md:py-4"
+      className="relative z-50 px-6 py-6 md:px-8 md:py-4"
       aria-label="Primary navigation"
     >
       <div
@@ -31,10 +36,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             onNavigate('home');
             setIsMobileMenuOpen(false);
           }}
-          className="text-xs uppercase tracking-[0.18em] transition-colors"
-          style={{ color: 'var(--ui-text)' }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
-          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text)')}
+          className={navButtonClass(currentPage === 'home')}
           aria-current={currentPage === 'home' ? 'page' : undefined}
         >
           Home
@@ -55,10 +57,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               <button
                 key={item.value}
                 onClick={() => onNavigate(item.value)}
-                className="text-xs uppercase tracking-[0.18em] transition-colors"
-                style={{ color: 'var(--ui-text)' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ui-hover)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ui-text)')}
+                className={navButtonClass(currentPage === item.value)}
                 aria-current={currentPage === item.value ? 'page' : undefined}
               >
                 {item.label}
@@ -103,8 +102,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   onNavigate(item.value);
                   setIsMobileMenuOpen(false);
                 }}
-                className="text-left text-xs uppercase tracking-[0.18em] transition-colors"
-                style={{ color: 'var(--ui-text)' }}
+                className={navButtonClass(currentPage === item.value, true)}
+                aria-current={currentPage === item.value ? 'page' : undefined}
               >
                 {item.label}
               </button>

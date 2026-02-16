@@ -79,27 +79,31 @@ export function FlashPage() {
           Select a flash design to preview full size. Swipe left or right on mobile, or use arrow keys on desktop.
         </p>
       </div>
-      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-3" role="list">
+      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-4 overflow-y-auto md:grid-cols-3 md:gap-5" role="list">
         {flashImages.map((src, index) => (
           <button
             key={src}
             onClick={() => setSelectedIndex(index)}
-            className="overflow-hidden rounded-md border transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="aspect-square rounded-lg border bg-black/25 p-2 transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:p-3"
             style={{ borderColor: 'var(--ui-separator)' }}
             aria-label={`Open flash design ${index + 1} of ${flashImages.length}`}
             role="listitem"
           >
-            <img src={src} alt={`Available flash ${index + 1}`} className="h-full w-full object-cover" loading="lazy" />
+            <img
+              src={src}
+              alt={`Available flash ${index + 1}`}
+              className="h-full w-full rounded-md bg-black/40 object-contain"
+              loading="lazy"
+            />
           </button>
         ))}
       </div>
       <section className="seo-content mx-auto mt-5 w-full max-w-7xl" aria-label="Flash SEO text">
         <h2 className="text-sm uppercase tracking-[0.16em]" style={{ color: 'var(--ui-text-muted)' }}>
-          Flash Tattoos in Sevilla
+          Flash Tattoos
         </h2>
         <p className="mt-2 text-xs leading-relaxed tracking-[0.06em]" style={{ color: 'var(--ui-text-muted)' }}>
-          Available flash tattoos by Gata Azul Tattoo in Sevilla. American Traditional and psychedelic flash designs
-          available for booking, including custom adaptation and placement guidance.
+          Available flash tattoos by Gata Azul. Designs available for booking, including custom adaptation and placement guidance.
         </p>
       </section>
 
