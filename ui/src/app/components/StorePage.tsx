@@ -8,6 +8,7 @@ export function StorePage() {
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [buyProductIndex, setBuyProductIndex] = useState<number | null>(null);
+  const [zoom, setZoom] = useState(1);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -49,8 +50,27 @@ export function StorePage() {
     };
   }, [selectedIndex]);
 
+  useEffect(() => {
+    setZoom(1);
+  }, [selectedIndex]);
+
   const closeModal = () => setSelectedIndex(null);
   const closeBuyForm = () => setBuyProductIndex(null);
+  const minZoom = 1;
+  const maxZoom = 3;
+  const zoomStep = 0.25;
+  const changeZoom = (delta: number) => {
+    setZoom((previous) => {
+      const next = previous + delta;
+      if (next < minZoom) {
+        return minZoom;
+      }
+      if (next > maxZoom) {
+        return maxZoom;
+      }
+      return Number(next.toFixed(2));
+    });
+  };
 
   const submitOrderEmail = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -80,7 +100,7 @@ export function StorePage() {
   };
 
   return (
-    <section className="flex h-full flex-col px-6 pb-6 pt-4 md:px-8">
+    <section className="overflow-x-hidden px-6 pb-8 pt-4 md:px-8">
       <div className="mx-auto mb-4 w-full max-w-7xl">
         <h1
           className="text-sm uppercase tracking-[0.2em]"
@@ -94,15 +114,14 @@ export function StorePage() {
         </p>
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (
           <article key={product.id} className="flex flex-col">
             <button
               onClick={() => setSelectedIndex(product.id - 1)}
-              className="block h-full min-h-0 w-full overflow-hidden rounded-md border bg-black/40 p-2"
-              style={{ borderColor: 'var(--ui-separator)' }}
+              className="block w-full rounded-md bg-black/40 p-2"
             >
-              <img src={product.src} alt={`Store item ${product.id}`} className="h-full w-full object-contain" />
+              <img src={product.src} alt={`Store item ${product.id}`} className="block h-auto w-full object-contain" />
             </button>
             <div className="space-y-1 px-1 pt-2">
               <p className="text-[10px] uppercase tracking-[0.14em]" style={{ color: 'var(--ui-text-muted)' }}>
@@ -161,7 +180,37 @@ export function StorePage() {
               >
                 Prev
               </button>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => changeZoom(-zoomStep)}
+                  className="rounded border px-2 py-1 text-[10px] uppercase tracking-[0.14em] transition-colors disabled:opacity-50"
+                  style={{ color: 'var(--ui-text-muted)', borderColor: 'var(--ui-separator)' }}
+                  disabled={zoom <= minZoom}
+                  aria-label="Zoom out"
+                >
+                  -
+                </button>
+                <p className="text-[10px] uppercase tracking-[0.14em]" style={{ color: 'var(--ui-text-muted)' }}>
+                  {Math.round(zoom * 100)}%
+                </p>
+                <button
+                  onClick={() => changeZoom(zoomStep)}
+                  className="rounded border px-2 py-1 text-[10px] uppercase tracking-[0.14em] transition-colors disabled:opacity-50"
+                  style={{ color: 'var(--ui-text-muted)', borderColor: 'var(--ui-separator)' }}
+                  disabled={zoom >= maxZoom}
+                  aria-label="Zoom in"
+                >
+                  +
+                </button>
+                <button
+                  onClick={() => setZoom(1)}
+                  className="rounded border px-2 py-1 text-[10px] uppercase tracking-[0.14em] transition-colors disabled:opacity-50"
+                  style={{ color: 'var(--ui-text-muted)', borderColor: 'var(--ui-separator)' }}
+                  disabled={zoom === 1}
+                  aria-label="Reset zoom"
+                >
+                  Reset
+                </button>
                 <button
                   onClick={goNext}
                   className="text-xs uppercase tracking-[0.2em] transition-colors"
@@ -210,18 +259,24 @@ export function StorePage() {
                 }
               }}
             >
-              <div className="mx-auto w-fit rounded-md border bg-black/60 p-2 md:p-4" style={{ borderColor: 'var(--ui-separator)' }}>
+              <div className="mx-auto w-full max-w-[min(92vw,1100px)] bg-black/60 p-2 md:p-4">
                 <p
                   className="mb-2 text-center text-xs uppercase tracking-[0.2em]"
                   style={{ color: 'var(--ui-text)' }}
                 >
                   {selectedIndex + 1} / {products.length}
                 </p>
-                <img
-                  src={products[selectedIndex].src}
-                  alt={`Store item ${selectedIndex + 1}`}
-                  className="block h-auto w-auto max-h-[calc(100vh-12rem)] max-w-[calc(100vw-2rem)] object-contain md:max-w-[calc(100vw-5rem)]"
-                />
+                <div className="overflow-auto">
+                  <img
+                    src={products[selectedIndex].src}
+                    alt={`Store item ${selectedIndex + 1}`}
+                    className="block h-auto max-w-none object-contain transition-[width] duration-200"
+                    style={{
+                      width: `${zoom * 100}%`,
+                      minWidth: '100%',
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>

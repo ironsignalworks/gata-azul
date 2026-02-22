@@ -58,8 +58,7 @@ export function PortfolioPage() {
           <button
             key={src}
             onClick={() => setSelectedIndex(index)}
-            className="group relative overflow-hidden rounded-md border"
-            style={{ borderColor: 'var(--ui-separator)' }}
+            className="group relative overflow-hidden rounded-md"
           >
             <img
               src={src}
@@ -93,7 +92,7 @@ export function PortfolioPage() {
           aria-label="Portfolio image viewer"
         >
           <div
-            className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-col"
+            className="mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-3 flex items-center justify-between">
@@ -155,7 +154,7 @@ export function PortfolioPage() {
                 }
               }}
             >
-              <div className="mx-auto w-fit rounded-md border bg-black/60 p-2 md:p-4" style={{ borderColor: 'var(--ui-separator)' }}>
+              <div className="mx-auto w-fit rounded-md bg-black/60 p-1 md:p-2">
                 <p
                   className="mb-2 text-center text-xs uppercase tracking-[0.2em]"
                   style={{ color: 'var(--ui-text)' }}
@@ -165,7 +164,7 @@ export function PortfolioPage() {
                 <img
                   src={images[selectedIndex]}
                   alt={`Tattoo work ${selectedIndex + 1}`}
-                  className="block h-auto w-auto max-h-[calc(100vh-12rem)] max-w-[calc(100vw-2rem)] object-contain md:max-w-[calc(100vw-5rem)]"
+                  className="block h-auto w-auto max-h-[calc(100vh-7rem)] max-w-[calc(100vw-1rem)] object-contain md:max-w-[calc(100vw-3rem)]"
                 />
               </div>
             </div>

@@ -37,7 +37,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative flex h-dvh min-h-svh flex-col overflow-hidden bg-black" style={{ color: 'var(--ui-text)' }}>
+    <div className="relative min-h-svh bg-black" style={{ color: 'var(--ui-text)' }}>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-black focus:px-3 focus:py-2 focus:text-white"
@@ -46,12 +46,9 @@ export default function App() {
       </a>
       <PsychedelicShaderBackground />
       <div className="absolute inset-0 z-10 bg-black/35" />
-      <div className="relative z-20 flex h-dvh min-h-svh flex-col overflow-hidden">
+      <div className="relative z-20 flex min-h-svh flex-col">
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-        <main
-          id="main-content"
-          className={`flex-1 overflow-x-hidden ${currentPage === 'home' ? 'overflow-hidden' : 'overflow-y-auto'}`}
-        >
+        <main id="main-content" className="flex-1 overflow-x-hidden pt-12 md:pt-0">
           {renderPage()}
         </main>
         <Footer />

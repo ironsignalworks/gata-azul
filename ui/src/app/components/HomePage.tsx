@@ -3,7 +3,7 @@ import { Logo } from './Logo';
 export function HomePage() {
   return (
     <section className="flex h-full items-center justify-center overflow-hidden px-8">
-      <div className="flex w-full max-w-3xl flex-col items-center">
+      <div className="flex w-full max-w-4xl flex-col items-center">
         <Logo />
       </div>
     </section>

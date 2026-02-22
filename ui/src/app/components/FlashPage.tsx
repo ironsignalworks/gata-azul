@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const flashImages = [
   'flash/IMG_6480.jpeg',
-  'flash/IMG_6594.jpeg',
-  'flash/IMG_6595.jpeg',
   'flash/IMG_6596.jpeg',
-  'flash/IMG_6597.jpeg',
   'flash/IMG_6598.jpeg',
+  'flash/IMG_6594.jpeg',
+  'flash/IMG_6597.jpeg',
+  'flash/IMG_6595.jpeg',
 ].map((filename) => `${import.meta.env.BASE_URL}${filename}`);
 
 export function FlashPage() {
@@ -52,10 +52,10 @@ export function FlashPage() {
     const metaDescription = document.querySelector('meta[name="description"]');
     const previousDescription = metaDescription?.getAttribute('content') ?? null;
 
-    document.title = 'Available Flash Tattoos in Sevilla | Gata Azul Tattoo';
+    document.title = 'Available Flash Tattoos | Gata Azul Tattoo';
     metaDescription?.setAttribute(
       'content',
-      'Browse available flash tattoos in Sevilla by Gata Azul Tattoo. American Traditional and psychedelic flash designs open for booking.',
+      'Browse available flash tattoos by Gata Azul Tattoo. American Traditional and psychedelic flash designs open for booking.',
     );
 
     return () => {
@@ -67,7 +67,7 @@ export function FlashPage() {
   }, []);
 
   return (
-    <section className="flex h-full flex-col px-6 pb-6 pt-4 md:px-8" aria-label="Flash catalog">
+    <section className="overflow-x-hidden px-6 pb-8 pt-4 md:px-8" aria-label="Flash catalog">
       <div className="mx-auto mb-4 w-full max-w-7xl">
         <h1
           className="text-sm uppercase tracking-[0.2em]"
@@ -79,20 +79,19 @@ export function FlashPage() {
           Select a flash design to preview full size. Swipe left or right on mobile, or use arrow keys on desktop.
         </p>
       </div>
-      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-4 overflow-y-auto md:grid-cols-3 md:gap-5" role="list">
+      <div className="mx-auto w-full max-w-6xl columns-2 gap-4 md:gap-5" role="list">
         {flashImages.map((src, index) => (
           <button
             key={src}
             onClick={() => setSelectedIndex(index)}
-            className="aspect-square rounded-lg border bg-black/25 p-2 transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:p-3"
-            style={{ borderColor: 'var(--ui-separator)' }}
+            className="mb-4 inline-block w-full align-top [break-inside:avoid] rounded-md bg-black/25 p-2 transition-transform hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:mb-5 md:p-3"
             aria-label={`Open flash design ${index + 1} of ${flashImages.length}`}
             role="listitem"
           >
             <img
               src={src}
               alt={`Available flash ${index + 1}`}
-              className="h-full w-full rounded-md bg-black/40 object-contain"
+              className="block h-auto w-full rounded-sm bg-black/40 object-contain"
               loading="lazy"
             />
           </button>
@@ -124,7 +123,7 @@ export function FlashPage() {
           aria-modal="true"
           aria-labelledby={modalTitleId}
         >
-          <div className="mx-auto flex h-full w-full max-w-[96vw] min-w-[280px] flex-col md:max-w-[48vw]" onClick={(event) => event.stopPropagation()}>
+          <div className="mx-auto flex h-full w-full max-w-[96vw] min-w-[280px] flex-col md:max-w-[90vw]" onClick={(event) => event.stopPropagation()}>
             <div className="mb-3 flex items-center justify-between">
               <button
                 onClick={goPrev}
@@ -163,8 +162,7 @@ export function FlashPage() {
               </div>
             </div>
             <div
-              className="flex-1 overflow-auto rounded-md border bg-black/60 p-2"
-              style={{ borderColor: 'var(--ui-separator)' }}
+              className="flex-1 overflow-y-auto overflow-x-hidden rounded-md bg-black/60 p-2"
               onTouchStart={(event) => {
                 const touch = event.changedTouches[0];
                 touchStartRef.current = { x: touch.clientX, y: touch.clientY };
@@ -194,7 +192,7 @@ export function FlashPage() {
               <img
                 src={flashImages[selectedIndex]}
                 alt={`Available flash ${selectedIndex + 1}`}
-                className="mx-auto h-auto w-full object-contain"
+                className="mx-auto block h-auto w-full max-w-full object-contain"
               />
             </div>
           </div>
