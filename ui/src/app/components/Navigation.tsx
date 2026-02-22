@@ -34,7 +34,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     const cursorY = event.clientY;
 
     charNodes.forEach((charNode) => {
-      charNode.style.transitionDuration = '260ms';
+      charNode.style.transitionDuration = '520ms';
       const rect = charNode.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -58,9 +58,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     window.setTimeout(() => {
       charNodes.forEach((charNode) => {
         charNode.style.transform = '';
-        charNode.style.transitionDuration = '';
       });
-    }, 420);
+    }, 620);
   };
 
   const renderAnimatedLabel = (label: string) => (
