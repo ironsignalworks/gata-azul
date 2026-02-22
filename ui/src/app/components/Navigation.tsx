@@ -1,5 +1,5 @@
 import { Instagram, Mail, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface NavigationProps {
   currentPage: 'home' | 'store' | 'portfolio' | 'flash' | 'contact' | 'bio';
@@ -8,6 +8,7 @@ interface NavigationProps {
 
 export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const rightItems: Array<{ label: string; value: 'store' | 'portfolio' | 'flash' | 'contact' | 'bio' }> = [
     { label: 'Portfolio', value: 'portfolio' },
@@ -82,9 +83,23 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     </>
   );
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 8);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <nav
-      className="relative z-50 px-6 py-6 md:px-8 md:py-4"
+      className={`sticky top-0 z-50 px-6 py-6 transition-colors duration-300 md:px-8 md:py-4 ${
+        isScrolled ? 'bg-black/75' : 'bg-transparent'
+      }`}
       aria-label="Primary navigation"
     >
       <div

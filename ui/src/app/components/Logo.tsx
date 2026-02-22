@@ -124,7 +124,7 @@ export function Logo() {
 
   return (
     <div className="hero-populate mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
-      <div className="relative w-full max-w-[576px] md:max-w-[456px]">
+      <div className="relative mt-[20px] w-full max-w-[548px] md:max-w-[433px]">
         <img
           src={logoSrc}
           alt="Gata Azul logo"

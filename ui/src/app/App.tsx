@@ -48,7 +48,7 @@ export default function App() {
       <div className="absolute inset-0 z-10 bg-black/35" />
       <div className="relative z-20 flex min-h-svh flex-col">
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-        <main id="main-content" className="flex-1 overflow-x-hidden pt-12 md:pt-0">
+        <main id="main-content" className="flex-1 overflow-x-hidden">
           {renderPage()}
         </main>
         <Footer />
