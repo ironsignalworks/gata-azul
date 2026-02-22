@@ -22,6 +22,67 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
       isActive ? 'text-[var(--ui-hover)]' : 'text-[var(--ui-text)] hover:text-[var(--ui-hover)]'
     }`;
 
+  const triggerMeltGlyphs = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.currentTarget;
+    const charNodes = target.querySelectorAll<HTMLElement>('[data-melt-char]');
+    if (!charNodes.length) {
+      return;
+    }
+
+    const bubbleRadius = 90;
+    const cursorX = event.clientX;
+    const cursorY = event.clientY;
+
+    charNodes.forEach((charNode) => {
+      charNode.style.transitionDuration = '260ms';
+      const rect = charNode.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = centerX - cursorX;
+      const dy = centerY - cursorY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const clampedDistance = Math.min(distance, bubbleRadius);
+      const influence = 1 - clampedDistance / bubbleRadius;
+      if (influence <= 0) {
+        charNode.style.transform = '';
+      } else {
+        const pushX = (dx / bubbleRadius) * -6 * influence;
+        const pushY = 9 * influence;
+        const stretchY = 1 + 0.12 * influence;
+        const squeezeX = 1 - 0.05 * influence;
+        charNode.style.transform = `translate(${pushX}px, ${pushY}px) scale(${squeezeX}, ${stretchY})`;
+      }
+    });
+
+    window.setTimeout(() => {
+      charNodes.forEach((charNode) => {
+        charNode.style.transform = '';
+        charNode.style.transitionDuration = '';
+      });
+    }, 420);
+  };
+
+  const renderAnimatedLabel = (label: string) => (
+    <>
+      <span className="sr-only">{label}</span>
+      <span aria-hidden="true" className="md:hidden">
+        {label}
+      </span>
+      <span aria-hidden="true" className="hero-melt-desktop hidden md:inline-flex">
+        {label.split('').map((char, index) => (
+          <span
+            key={`${label}-${char}-${index}`}
+            data-melt-char="true"
+            className={`hero-melt-char ${char === ' ' ? 'hero-melt-space' : ''}`}
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        ))}
+      </span>
+    </>
+  );
+
   return (
     <nav
       className="relative z-50 px-6 py-6 md:px-8 md:py-4"
@@ -32,14 +93,16 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
         style={{ fontFamily: 'var(--font-ui)' }}
       >
         <button
-          onClick={() => {
+          onClick={(event) => {
+            triggerMeltGlyphs(event);
             onNavigate('home');
             setIsMobileMenuOpen(false);
           }}
           className={navButtonClass(currentPage === 'home')}
           aria-current={currentPage === 'home' ? 'page' : undefined}
+          aria-label="Home"
         >
-          Home
+          {renderAnimatedLabel('Home')}
         </button>
         <button
           className="md:hidden"
@@ -56,11 +119,15 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             {rightItems.map((item) => (
               <button
                 key={item.value}
-                onClick={() => onNavigate(item.value)}
+                onClick={(event) => {
+                  triggerMeltGlyphs(event);
+                  onNavigate(item.value);
+                }}
                 className={navButtonClass(currentPage === item.value)}
                 aria-current={currentPage === item.value ? 'page' : undefined}
+                aria-label={item.label}
               >
-                {item.label}
+                {renderAnimatedLabel(item.label)}
               </button>
             ))}
           </div>

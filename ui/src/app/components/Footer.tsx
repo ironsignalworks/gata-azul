@@ -1,4 +1,4 @@
-import { Globe, Instagram } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -74,17 +74,6 @@ export function Footer() {
                 <Instagram size={16} strokeWidth={1.8} />
                 Instagram
               </a>
-              <a
-                href="https://ironsignalworks.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconLinkClass}
-                style={{ color: 'var(--ui-text-muted)' }}
-                aria-label="Iron Signal Works"
-              >
-                <Globe size={16} strokeWidth={1.8} />
-                Iron Signal Works
-              </a>
             </div>
           </div>
         </div>
@@ -94,6 +83,16 @@ export function Footer() {
           style={{ borderColor: 'rgba(255, 255, 255, 0.15)', color: 'var(--ui-text-muted)' }}
         >
           <p>{year} Gata Azul Tattoo Studio. All rights reserved.</p>
+          <a
+            href="https://ironsignalworks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 text-[11px] tracking-[0.08em] opacity-65 transition-opacity hover:opacity-100 md:mt-0 md:text-[10px]"
+            style={{ color: 'var(--ui-text-muted)' }}
+            aria-label="Site by Iron Signal Works"
+          >
+            Site by Iron Signal Works
+          </a>
         </div>
       </div>
     </footer>

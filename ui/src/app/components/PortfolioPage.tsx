@@ -1,12 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 
-const images = ['t1.jpeg', 't2.jpeg', 't3.jpeg', 't4.jpeg', 't5.jpeg', 't6.jpeg', 't7.jpeg', 't8.jpeg'].map(
-  (filename) => `${import.meta.env.BASE_URL}${filename}`,
-);
+const images = [
+  't9.jpeg',
+  't10.jpeg',
+  't13.jpeg',
+  't12.jpeg',
+  't11.jpeg',
+  't14.jpeg',
+  't15.jpeg',
+  't16.jpeg',
+  't17.jpeg',
+  't18.jpeg',
+  't3.jpeg',
+  't19.jpeg',
+  't1.jpeg',
+  't2.jpeg',
+  't6.jpeg',
+  't4.jpeg',
+  't5.jpeg',
+  't20.jpeg',
+  't7.jpeg',
+  't8.jpeg',
+].map((filename) => `${import.meta.env.BASE_URL}${filename}`);
 
 export function PortfolioPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const masonryHeightClasses = [
+    'h-[190px] md:h-[240px]',
+    'h-[250px] md:h-[340px]',
+    'h-[320px] md:h-[430px]',
+    'h-[220px] md:h-[300px]',
+    'h-[360px] md:h-[500px]',
+    'h-[270px] md:h-[360px]',
+  ];
 
   const goPrev = () => {
     setSelectedIndex((prev) => (prev === null ? 0 : (prev - 1 + images.length) % images.length));
@@ -53,17 +80,18 @@ export function PortfolioPage() {
           Portfolio
         </h1>
       </div>
-      <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-2 gap-3 overflow-hidden md:grid-cols-4">
+      <div className="mx-auto w-full max-w-7xl columns-2 gap-3 md:columns-4 md:gap-4" role="list">
         {images.map((src, index) => (
           <button
             key={src}
             onClick={() => setSelectedIndex(index)}
-            className="group relative overflow-hidden rounded-md"
+            className={`group mb-3 inline-block w-full align-top [break-inside:avoid] overflow-hidden rounded-md md:mb-4 ${masonryHeightClasses[index % masonryHeightClasses.length]}`}
+            role="listitem"
           >
             <img
               src={src}
               alt={`Tattoo work ${index + 1}`}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
             />
           </button>
         ))}
@@ -73,17 +101,20 @@ export function PortfolioPage() {
         <div
           className="fixed inset-0 z-[100] bg-black/90 p-4 md:p-8"
           onClick={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-image]') && !target.closest('[data-modal-controls]')) {
               closeModal();
             }
           }}
           onPointerDown={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-image]') && !target.closest('[data-modal-controls]')) {
               closeModal();
             }
           }}
           onTouchStart={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-image]') && !target.closest('[data-modal-controls]')) {
               closeModal();
             }
           }}
@@ -91,11 +122,8 @@ export function PortfolioPage() {
           aria-modal="true"
           aria-label="Portfolio image viewer"
         >
-          <div
-            className="mx-auto flex w-full max-w-[calc(100vw-1rem)] flex-col"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="mb-3 flex items-center justify-between">
+          <div className="mx-auto flex w-full max-w-[min(94vw,1100px)] flex-col">
+            <div data-modal-controls className="mb-3 flex items-center justify-between">
               <button
                 onClick={goPrev}
                 className="text-xs uppercase tracking-[0.2em] transition-colors"
@@ -154,7 +182,7 @@ export function PortfolioPage() {
                 }
               }}
             >
-              <div className="mx-auto w-fit rounded-md bg-black/60 p-1 md:p-2">
+              <div data-modal-image className="mx-auto w-fit rounded-md bg-black/60 p-1 md:p-2">
                 <p
                   className="mb-2 text-center text-xs uppercase tracking-[0.2em]"
                   style={{ color: 'var(--ui-text)' }}

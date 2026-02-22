@@ -148,17 +148,20 @@ export function StorePage() {
         <div
           className="fixed inset-0 z-[110] bg-black/90 p-4 md:p-8"
           onClick={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-panel]')) {
               closeModal();
             }
           }}
           onPointerDown={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-panel]')) {
               closeModal();
             }
           }}
           onTouchStart={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-panel]')) {
               closeModal();
             }
           }}
@@ -167,8 +170,8 @@ export function StorePage() {
           aria-label="Store image viewer"
         >
           <div
+            data-modal-panel
             className="mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-col"
-            onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-3 flex items-center justify-between">
               <button

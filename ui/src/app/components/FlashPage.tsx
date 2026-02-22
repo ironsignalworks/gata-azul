@@ -110,12 +110,14 @@ export function FlashPage() {
         <div
           className="fixed inset-0 z-[120] bg-black/92 p-3 md:p-8"
           onClick={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-panel]')) {
               setSelectedIndex(null);
             }
           }}
           onPointerDown={(event) => {
-            if (event.target === event.currentTarget) {
+            const target = event.target as HTMLElement;
+            if (!target.closest('[data-modal-panel]')) {
               setSelectedIndex(null);
             }
           }}
@@ -123,7 +125,10 @@ export function FlashPage() {
           aria-modal="true"
           aria-labelledby={modalTitleId}
         >
-          <div className="mx-auto flex h-full w-full max-w-[96vw] min-w-[280px] flex-col md:max-w-[90vw]" onClick={(event) => event.stopPropagation()}>
+          <div
+            data-modal-panel
+            className="mx-auto flex w-full max-w-[min(94vw,1100px)] min-w-[280px] flex-col"
+          >
             <div className="mb-3 flex items-center justify-between">
               <button
                 onClick={goPrev}
@@ -162,7 +167,7 @@ export function FlashPage() {
               </div>
             </div>
             <div
-              className="flex-1 overflow-y-auto overflow-x-hidden rounded-md bg-black/60 p-2"
+              className="max-h-[calc(100vh-8.5rem)] overflow-y-auto overflow-x-hidden rounded-md bg-black/60 p-2"
               onTouchStart={(event) => {
                 const touch = event.changedTouches[0];
                 touchStartRef.current = { x: touch.clientX, y: touch.clientY };
