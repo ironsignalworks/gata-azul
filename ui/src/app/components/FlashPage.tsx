@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 const flashImages = [
+  'flash/IMG_7001.jpeg',
+  'flash/IMG_7002.jpeg',
+  'flash/IMG_7003.jpeg',
+  'flash/IMG_7004.jpeg',
   'flash/IMG_6480.jpeg',
   'flash/IMG_6596.jpeg',
   'flash/IMG_6598.jpeg',
