@@ -5,11 +5,17 @@ export function Logo() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
-      <div className="relative mt-[20px] w-full max-w-[548px] md:max-w-[433px]">
+      <div className="relative mt-[20px] aspect-square w-full max-w-[548px] md:max-w-[433px]">
         <img
           src={logoSrc}
           alt="Gata Azul logo"
-          className="h-auto w-full object-contain"
+          className="h-full w-full object-contain"
+          width={1080}
+          height={1080}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          sizes="(max-width: 768px) 85vw, 548px"
           onError={(event) => {
             event.currentTarget.style.display = 'none';
           }}
